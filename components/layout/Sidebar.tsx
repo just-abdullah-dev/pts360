@@ -40,7 +40,7 @@ export function Sidebar({
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const pathname = usePathname();
   const { user } = useAppSelector((state) => state.auth);
-  
+
   const dispatch = useAppDispatch();
 
   const navigationItems = [
@@ -233,24 +233,28 @@ export function Sidebar({
       {/* Navigation */}
       <nav className="flex-1 p-4">
         <ul className="space-y-2">
-          {navigationItems.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className={cn(
-                  "flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors line-clamp-1 overflow-hidden",
-                  collapsed ? "justify-center" : "space-x-3",
-                  pathname === item.href 
-                    ? "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300"
-                    : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                )}
-                title={collapsed ? item.label : undefined}
-              >
-                <item.icon className="h-5 w-5 inline-block" />
-                {!collapsed && <span>{item.label}</span>}
-              </Link>
-            </li>
-          ))}
+          {navigationItems.map((item) => {
+            if (user && item.roles.includes(user.role)) {
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors line-clamp-1 overflow-hidden",
+                      collapsed ? "justify-center" : "space-x-3",
+                      pathname === item.href
+                        ? "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300"
+                        : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                    )}
+                    title={collapsed ? item.label : undefined}
+                  >
+                    <item.icon className="h-5 w-5 inline-block" />
+                    {!collapsed && <span>{item.label}</span>}
+                  </Link>
+                </li>
+              );
+            }
+          })}
         </ul>
       </nav>
 
