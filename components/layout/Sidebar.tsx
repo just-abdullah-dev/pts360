@@ -20,7 +20,9 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  Building2,
 } from "lucide-react";
+import { Department, departments } from "@/constants/sampleData";
 
 interface SidebarProps {
   collapsed: boolean;
@@ -40,6 +42,7 @@ export function Sidebar({
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const pathname = usePathname();
   const { user } = useAppSelector((state) => state.auth);
+  console.log(user);
 
   const dispatch = useAppDispatch();
 
@@ -47,8 +50,8 @@ export function Sidebar({
     {
       href: "/dashboard",
       icon: LayoutDashboard,
-      label: "Dashboard",
-      roles: ["Admin", "HOD"],
+      label: "Organization",
+      roles: ["Admin", "CEO"],
     },
     {
       href: "/dashboard/goals",
@@ -69,6 +72,9 @@ export function Sidebar({
     dispatch(logout());
     document.cookie =
       "auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie =
+      "departmentSlug=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     window.location.href = "/login";
   };
 
@@ -200,12 +206,16 @@ export function Sidebar({
   return (
     <div
       className={cn(
-        "hidden lg:flex lg:flex-col bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 transition-all duration-300",
+        "hidden lg:flex lg:flex-col bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 overflow-y-auto py-14 relative ",
         collapsed ? "w-[76px]" : "w-64"
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700">
+      <div
+        className={`flex items-center justify-between p-3 fixed top-0 left-0 border-b bg-white  dark:bg-gray-900 border-gray-200 dark:border-gray-700 ${
+          collapsed ? "w-[76px]" : "w-64"
+        }`}
+      >
         {!collapsed && (
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center">
@@ -232,7 +242,11 @@ export function Sidebar({
 
       {/* Navigation */}
       <nav className="flex-1 p-4">
-        <ul className="space-y-2">
+        <ul
+          className={` gap-1 flex flex-col ${
+            user?.role === "HOD" ? " flex-col-reverse" : "lg:flex-col"
+          }`}
+        >
           {navigationItems.map((item) => {
             if (user && item.roles.includes(user.role)) {
               return (
@@ -240,7 +254,7 @@ export function Sidebar({
                   <Link
                     href={item.href}
                     className={cn(
-                      "flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors line-clamp-1 overflow-hidden",
+                      "flex items-center px-3 py-[6px] rounded-lg text-sm font-medium transition-colors line-clamp-1 overflow-hidden",
                       collapsed ? "justify-center" : "space-x-3",
                       pathname === item.href
                         ? "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300"
@@ -255,11 +269,41 @@ export function Sidebar({
               );
             }
           })}
+          {departments.map((item: Department) => {
+            if (
+              user?.role !== "CEO" &&
+              user?.role !== "Admin" &&
+              (user?.role !== "HOD" || user.departmentSlug !== item.slug)
+            ) {
+              return null;
+            }
+            return (
+              <Link
+                href={`/dashboard/departments/${item.slug}`}
+                key={item.id}
+                className={cn(
+                  "flex items-center px-3 py-[6px] rounded-lg text-sm font-medium transition-colors line-clamp-1 overflow-hidden",
+                  collapsed ? "justify-center" : "space-x-3",
+                  pathname.endsWith(item.slug)
+                    ? "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300"
+                    : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                )}
+                title={collapsed ? item.title : undefined}
+              >
+                <Building2 className="h-5 w-5 inline-block" />
+                {!collapsed && <span>{item.title}</span>}
+              </Link>
+            );
+          })}
         </ul>
       </nav>
 
       {/* Desktop User Menu */}
-      <div className="border-t border-gray-200 dark:border-gray-700 p-4">
+      <div
+        className={` p-2 fixed bottom-0 left-0 border-b bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 ${
+          collapsed ? "w-[76px]" : "w-64"
+        }`}
+      >
         {collapsed ? (
           <Avatar className="h-8 w-8 mx-auto">
             <AvatarImage src={user?.avatar} alt={user?.name} />
