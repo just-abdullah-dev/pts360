@@ -34,78 +34,80 @@ export default function DepartmentPerformanceTab() {
               Long Term Goals & Objectives
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-">
-            <div className="relative w-32 h-32 mx-auto ">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={[
-                      {
-                        value: departmentTasks[0].open,
-                        color: "#FB923C",
-                      },
-                      {
-                        value: departmentTasks[0].inProgress,
-                        color: "#F97316",
-                      },
-                      {
-                        value: departmentTasks[0].completed,
-                        color: "#EA580C",
-                      },
-                    ]}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={45}
-                    outerRadius={60}
-                    dataKey="value"
-                  >
-                    {[
-                      {
-                        value: departmentTasks[0].open,
-                        color: "#FDBA74", // Light Orange - Open
-                      },
-                      {
-                        value: departmentTasks[0].inProgress,
-                        color: "#FB923C", // Medium Orange - In Progress
-                      },
-                      {
-                        value: departmentTasks[0].completed,
-                        color: "#EA580C", // Deep Orange - Completed
-                      },
-                    ].map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {departmentTasks[0].total}
-                </span>
-                <span className="text-sm text-gray-500">Total</span>
-              </div>
-            </div>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-orange-400"></div>
-                  <span>Planned Goals</span>
+          <CardContent className="">
+            <div className=" grid grid-cols-1 md:grid-cols-2 items-center">
+              <div className="relative w-32 h-32 mx-auto ">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={[
+                        {
+                          value: departmentTasks[0].open,
+                          color: "#FB923C",
+                        },
+                        {
+                          value: departmentTasks[0].inProgress,
+                          color: "#F97316",
+                        },
+                        {
+                          value: departmentTasks[0].completed,
+                          color: "#EA580C",
+                        },
+                      ]}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={45}
+                      outerRadius={60}
+                      dataKey="value"
+                    >
+                      {[
+                        {
+                          value: departmentTasks[0].open,
+                          color: "#FDBA74", // Light Orange - Open
+                        },
+                        {
+                          value: departmentTasks[0].inProgress,
+                          color: "#FB923C", // Medium Orange - In Progress
+                        },
+                        {
+                          value: departmentTasks[0].completed,
+                          color: "#EA580C", // Deep Orange - Completed
+                        },
+                      ].map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {departmentTasks[0].total}
+                  </span>
+                  <span className="text-sm text-gray-500">Total</span>
                 </div>
-                <span>{departmentTasks[0].open}</span>
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-                  <span>In-Progress</span>
+              <div className="space-y-2 text-xs">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-orange-400"></div>
+                    <span>Planned Goals</span>
+                  </div>
+                  <span>{departmentTasks[0].open}</span>
                 </div>
-                <span>{departmentTasks[0].inProgress}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-orange-600"></div>
-                  <span>Completed</span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+                    <span>In-Progress</span>
+                  </div>
+                  <span>{departmentTasks[0].inProgress}</span>
                 </div>
-                <span>{departmentTasks[0].completed}</span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-orange-600"></div>
+                    <span>Completed</span>
+                  </div>
+                  <span>{departmentTasks[0].completed}</span>
+                </div>
               </div>
             </div>
 
@@ -150,6 +152,7 @@ export default function DepartmentPerformanceTab() {
             </div>
           </CardContent>
         </Card>
+
         {/* short term goals and objectives Card */}
         <Card>
           <CardHeader>
@@ -158,77 +161,79 @@ export default function DepartmentPerformanceTab() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-">
-            <div className="relative w-32 h-32 mx-auto ">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={[
-                      {
-                        value: departmentTasks[1].open,
-                        color: "#FB923C",
-                      },
-                      {
-                        value: departmentTasks[1].inProgress,
-                        color: "#F97316",
-                      },
-                      {
-                        value: departmentTasks[1].completed,
-                        color: "#EA580C",
-                      },
-                    ]}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={45}
-                    outerRadius={60}
-                    dataKey="value"
-                  >
-                    {[
-                      {
-                        value: departmentTasks[1].open,
-                        color: "#FDBA74", // Light Orange - Open
-                      },
-                      {
-                        value: departmentTasks[1].inProgress,
-                        color: "#FB923C", // Medium Orange - In Progress
-                      },
-                      {
-                        value: departmentTasks[1].completed,
-                        color: "#EA580C", // Deep Orange - Completed
-                      },
-                    ].map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {departmentTasks[1].total}
-                </span>
-                <span className="text-sm text-gray-500">Total</span>
-              </div>
-            </div>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-orange-400"></div>
-                  <span>Planned Goals</span>
+            <div className=" grid grid-cols-1 md:grid-cols-2 items-center">
+              <div className="relative w-32 h-32 mx-auto ">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={[
+                        {
+                          value: departmentTasks[1].open,
+                          color: "#FB923C",
+                        },
+                        {
+                          value: departmentTasks[1].inProgress,
+                          color: "#F97316",
+                        },
+                        {
+                          value: departmentTasks[1].completed,
+                          color: "#EA580C",
+                        },
+                      ]}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={45}
+                      outerRadius={60}
+                      dataKey="value"
+                    >
+                      {[
+                        {
+                          value: departmentTasks[1].open,
+                          color: "#FDBA74", // Light Orange - Open
+                        },
+                        {
+                          value: departmentTasks[1].inProgress,
+                          color: "#FB923C", // Medium Orange - In Progress
+                        },
+                        {
+                          value: departmentTasks[1].completed,
+                          color: "#EA580C", // Deep Orange - Completed
+                        },
+                      ].map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {departmentTasks[1].total}
+                  </span>
+                  <span className="text-sm text-gray-500">Total</span>
                 </div>
-                <span>{departmentTasks[1].open}</span>
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-                  <span>In-Progress</span>
+              <div className="space-y-2 text-xs">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-orange-400"></div>
+                    <span>Planned Goals</span>
+                  </div>
+                  <span>{departmentTasks[1].open}</span>
                 </div>
-                <span>{departmentTasks[1].inProgress}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-orange-600"></div>
-                  <span>Completed</span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+                    <span>In-Progress</span>
+                  </div>
+                  <span>{departmentTasks[1].inProgress}</span>
                 </div>
-                <span>{departmentTasks[1].completed}</span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-orange-600"></div>
+                    <span>Completed</span>
+                  </div>
+                  <span>{departmentTasks[1].completed}</span>
+                </div>
               </div>
             </div>
 
@@ -280,77 +285,79 @@ export default function DepartmentPerformanceTab() {
             <CardTitle className="text-base">Routine Tasks</CardTitle>
           </CardHeader>
           <CardContent className="space-y-">
-            <div className="relative w-32 h-32 mx-auto ">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={[
-                      {
-                        value: departmentTasks[2].open,
-                        color: "#FB923C",
-                      },
-                      {
-                        value: departmentTasks[2].inProgress,
-                        color: "#F97316",
-                      },
-                      {
-                        value: departmentTasks[2].completed,
-                        color: "#EA580C",
-                      },
-                    ]}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={45}
-                    outerRadius={60}
-                    dataKey="value"
-                  >
-                    {[
-                      {
-                        value: departmentTasks[2].open,
-                        color: "#FDBA74", // Light Orange - Open
-                      },
-                      {
-                        value: departmentTasks[2].inProgress,
-                        color: "#FB923C", // Medium Orange - In Progress
-                      },
-                      {
-                        value: departmentTasks[2].completed,
-                        color: "#EA580C", // Deep Orange - Completed
-                      },
-                    ].map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {departmentTasks[2].total}
-                </span>
-                <span className="text-sm text-gray-500">Total</span>
-              </div>
-            </div>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-orange-400"></div>
-                  <span>Planned Goals</span>
+            <div className=" grid grid-cols-1 md:grid-cols-2 items-center">
+              <div className="relative w-32 h-32 mx-auto ">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={[
+                        {
+                          value: departmentTasks[2].open,
+                          color: "#FB923C",
+                        },
+                        {
+                          value: departmentTasks[2].inProgress,
+                          color: "#F97316",
+                        },
+                        {
+                          value: departmentTasks[2].completed,
+                          color: "#EA580C",
+                        },
+                      ]}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={45}
+                      outerRadius={60}
+                      dataKey="value"
+                    >
+                      {[
+                        {
+                          value: departmentTasks[2].open,
+                          color: "#FDBA74", // Light Orange - Open
+                        },
+                        {
+                          value: departmentTasks[2].inProgress,
+                          color: "#FB923C", // Medium Orange - In Progress
+                        },
+                        {
+                          value: departmentTasks[2].completed,
+                          color: "#EA580C", // Deep Orange - Completed
+                        },
+                      ].map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {departmentTasks[2].total}
+                  </span>
+                  <span className="text-sm text-gray-500">Total</span>
                 </div>
-                <span>{departmentTasks[2].open}</span>
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-                  <span>In-Progress</span>
+              <div className="space-y-2 text-xs">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-orange-400"></div>
+                    <span>Planned Goals</span>
+                  </div>
+                  <span>{departmentTasks[2].open}</span>
                 </div>
-                <span>{departmentTasks[2].inProgress}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-orange-600"></div>
-                  <span>Completed</span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+                    <span>In-Progress</span>
+                  </div>
+                  <span>{departmentTasks[2].inProgress}</span>
                 </div>
-                <span>{departmentTasks[2].completed}</span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-orange-600"></div>
+                    <span>Completed</span>
+                  </div>
+                  <span>{departmentTasks[2].completed}</span>
+                </div>
               </div>
             </div>
 
@@ -396,8 +403,6 @@ export default function DepartmentPerformanceTab() {
           </CardContent>
         </Card>
 
-     
-
         {/* Upcoming Deadlines */}
         <Card>
           <CardHeader>
@@ -405,7 +410,7 @@ export default function DepartmentPerformanceTab() {
               Up Coming Deadlines
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-2">
             {dashboardStats.upcomingDeadlines.map((deadline, index) => (
               <div key={index} className="space-y-2">
                 <h4 className="font-medium text-sm">{deadline.title}</h4>
@@ -434,8 +439,8 @@ export default function DepartmentPerformanceTab() {
           <CardHeader>
             <CardTitle className="text-lg">Over-Due Tasks</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-4">
+          <CardContent className="space-y-2">
+            <div className="space-y-2">
               <div className="space-y-2">
                 <h4 className="font-medium text-sm">
                   Recruitment for Crew Members for KPK Stores
@@ -488,8 +493,8 @@ export default function DepartmentPerformanceTab() {
           <CardHeader>
             <CardTitle className="text-lg">Activity Feed</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-4">
+          <CardContent className="space-y-2">
+            <div className="space-y-2">
               <div className="space-y-2">
                 <h4 className="font-medium text-sm">
                   Recruitment for Crew Members for KPK Stores

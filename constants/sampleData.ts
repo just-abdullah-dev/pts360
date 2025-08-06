@@ -21,11 +21,13 @@ export interface Goal {
   title: string;
   description: string;
   label: string;
+  department: string;
   assignees: string[];
   progress: number;
   status: "Overdue" | "In-Progress" | "Completed" | "Submitted" | "Closed";
   dueDate: string;
   startDate: string;
+  createdAt: string;
   files: string[];
   jobs: Job[];
 }
@@ -173,11 +175,14 @@ export const sampleGoals: Goal[] = [
     description:
       "Complete recruitment process for new crew members in KPK region",
     label: "Recruitment",
+    
+    department: "IT",
     assignees: ["2"],
     progress: 100,
     status: "Completed",
     dueDate: "2025-10-13",
     startDate: "2025-09-01",
+    createdAt: "2025-08-15",
     files: [],
     jobs: [
       {
@@ -240,12 +245,14 @@ export const sampleGoals: Goal[] = [
     id: "2",
     title: "Create comprehensive policy manual",
     description: "Create comprehensive policy manual",
+    department: "HR",
     label: "Policies",
     assignees: ["3"],
     progress: 67,
     status: "In-Progress",
     dueDate: "2025-10-20",
     startDate: "2025-09-15",
+    createdAt: "2025-08-27",
     files: [],
     jobs: [
       {

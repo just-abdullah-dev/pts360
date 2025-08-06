@@ -25,7 +25,7 @@ export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-2">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
@@ -52,7 +52,7 @@ export default function SettingsPage() {
               Customize how PTS360 looks and feels
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-2">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label>Theme</Label>
@@ -105,7 +105,7 @@ export default function SettingsPage() {
               Manage your notification preferences
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-2">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label>Email Notifications</Label>
@@ -155,7 +155,7 @@ export default function SettingsPage() {
               Set your language and regional preferences
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-2">
             <div className="space-y-2">
               <Label>Language</Label>
               <Select defaultValue="en">
@@ -213,7 +213,7 @@ export default function SettingsPage() {
               Manage your privacy and security settings
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-2">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label>Two-Factor Authentication</Label>

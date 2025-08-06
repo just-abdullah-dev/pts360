@@ -110,7 +110,7 @@ export default function NewUserPage() {
           />
         </div>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-2">
           <div>
             <Label htmlFor="address">Address</Label>
             <Textarea id="address" placeholder="Enter address" />
@@ -139,7 +139,7 @@ export default function NewUserPage() {
                   <DialogHeader>
                     <DialogTitle>Add New Department</DialogTitle>
                   </DialogHeader>
-                  <div className="space-y-4 py-4">
+                  <div className="space-y-2 py-4">
                     <Input placeholder="Department name" />
                     <Button>Save</Button>
                   </div>
@@ -171,7 +171,7 @@ export default function NewUserPage() {
                   <DialogHeader>
                     <DialogTitle>Add New Location</DialogTitle>
                   </DialogHeader>
-                  <div className="space-y-4 py-4">
+                  <div className="space-y-2 py-4">
                     <Input placeholder="Location name" />
                     <Button>Save</Button>
                   </div>
@@ -203,7 +203,7 @@ export default function NewUserPage() {
                   <DialogHeader>
                     <DialogTitle>Add New Position</DialogTitle>
                   </DialogHeader>
-                  <div className="space-y-4 py-4">
+                  <div className="space-y-2 py-4">
                     <Input placeholder="Position name" />
                     <Button>Save</Button>
                   </div>

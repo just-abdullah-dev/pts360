@@ -71,7 +71,7 @@ export default function NotificationsPage() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-2">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
@@ -99,7 +99,7 @@ export default function NotificationsPage() {
       </div>
 
       {/* Notifications List */}
-      <div className="space-y-4">
+      <div className="space-y-2">
         {notifications.length === 0 ? (
           <Card>
             <CardContent className="p-8 text-center">

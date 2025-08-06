@@ -51,7 +51,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-orange-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 p-4">
       <Card className="w-full max-w-md shadow-xl border-0 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
-        <CardHeader className="text-center space-y-4">
+        <CardHeader className="text-center space-y-2">
           <div className="flex items-center justify-center space-x-2">
             <BarChart3 className="h-8 w-8 text-orange-500" />
             <span className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -66,7 +66,7 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-2">
             <div className="space-y-2">
               <Label
                 htmlFor="email"

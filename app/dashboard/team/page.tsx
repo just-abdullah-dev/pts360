@@ -9,7 +9,7 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 
 export default function TeamPage() {
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-2">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Team</h1>
@@ -30,7 +30,7 @@ export default function TeamPage() {
                 {user.designation}
               </Badge>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-2">
               <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                 <div className="flex items-center space-x-2">
                   <MapPin className="h-4 w-4" />

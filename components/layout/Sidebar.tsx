@@ -42,7 +42,6 @@ export function Sidebar({
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const pathname = usePathname();
   const { user } = useAppSelector((state) => state.auth);
-  console.log(user);
 
   const dispatch = useAppDispatch();
 
@@ -50,20 +49,26 @@ export function Sidebar({
     {
       href: "/dashboard",
       icon: LayoutDashboard,
-      label: "Organization",
-      roles: ["Admin", "CEO"],
+      label: "Cheezious",
+      roles: ["CEO"],
     },
     {
       href: "/dashboard/goals",
       icon: Target,
-      label: "Goals & Tasks",
-      roles: ["Admin", "HOD", "Manager", "Coordinator"],
+      label: "Goals",
+      roles: ["CEO", "HOD", "Manager", "Coordinator"],
+    },
+    {
+      href: "/dashboard",
+      icon: Building2,
+      label: "Departments",
+      roles: ["Admin"],
     },
     {
       href: "/dashboard/team",
       icon: Users,
       label: "Team",
-      roles: ["Admin", "HOD"],
+      roles: ["HOD"],
     },
     { href: "/dashboard/users", icon: Users, label: "Users", roles: ["Admin"] },
   ];
@@ -272,7 +277,6 @@ export function Sidebar({
           {departments.map((item: Department) => {
             if (
               user?.role !== "CEO" &&
-              user?.role !== "Admin" &&
               (user?.role !== "HOD" || user.departmentSlug !== item.slug)
             ) {
               return null;

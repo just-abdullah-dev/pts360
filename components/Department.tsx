@@ -22,8 +22,8 @@ export default function Department({slug}: {slug: string}) {
      
       </div>
       {/* Tabs */}
-      <Tabs defaultValue="department-performance" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3 max-w-xl">
+      <Tabs defaultValue="department-performance" className="space-y-2">
+        <TabsList className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-xl mb-[70px] md:m-0">
           <TabsTrigger value="department-performance">
             Department Performance
           </TabsTrigger>
