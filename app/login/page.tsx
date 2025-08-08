@@ -32,6 +32,8 @@ export default function LoginPage() {
       document.cookie = `departmentSlug=${user?.departmentSlug}; path=/; max-age=86400`;
       if (user?.role === "HOD") {
         router.push(`/dashboard/departments/${user.departmentSlug}`);
+      } else if (["Manager", "Coordinator"].includes(user?.role ?? "")) {
+        router.push(`/dashboard/tasks`);
       } else {
         router.push("/dashboard");
       }

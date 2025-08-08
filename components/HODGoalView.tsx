@@ -188,7 +188,6 @@ export default function HODGoalView() {
                   <TableHead>Progress</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Due Date</TableHead>
-                  <TableHead className="w-12"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -241,18 +240,13 @@ export default function HODGoalView() {
                       <TableCell>
                         <Badge
                           variant="outline"
-                          className={getStatusColor(goal.status) + " w-[90px]"}
+                          className={getStatusColor(goal.status) + " "}
                         >
                           {goal.status}
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        {new Date(goal.dueDate).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>
-                        <Button variant="ghost" size="sm">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
+                        <span className="text-xs">{new Date(goal.dueDate).toLocaleDateString()}</span>
                       </TableCell>
                     </TableRow>
 
@@ -278,7 +272,7 @@ export default function HODGoalView() {
                                 <div className=" flex gap-2 items-center">
                                   <p className="text-xs text-gray-500">Expected Due Date:</p>
                                   <p className="text-xs font-medium">
-                                    {new Date(goal.dueDate).toLocaleDateString()}
+                                    <span className="text-xs">{new Date(goal.dueDate).toLocaleDateString()}</span>
                                   </p>
                                 </div>
                               </div>

@@ -139,7 +139,7 @@ export const sampleUsers: User[] = [
   {
     id: "2",
     name: "Nabeel",
-    email: "nabeel@pts360.com",
+    email: "team@pts360.com",
     designation: "Store Manager",
     location: "Lahore, Pakistan",
     avatar:
@@ -158,6 +158,36 @@ export const sampleUsers: User[] = [
   },
   {
     id: "4",
+    name: "Asifa",
+    email: "asifa@pts360.com",
+    designation: "Policy Specialist",
+    location: "Karachi, Pakistan",
+    avatar:
+      "https://images.pexels.com/photos/2379007/pexels-photo-2379007.jpeg?auto=compress&cs=tinysrgb&w=400",
+    role: "Employee",
+  },
+  {
+    id: "22",
+    name: "Nabeel",
+    email: "team@pts360.com",
+    designation: "Store Manager",
+    location: "Lahore, Pakistan",
+    avatar:
+      "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=400",
+    role: "Manager",
+  },
+  {
+    id: "33",
+    name: "Multi",
+    email: "multi@pts360.com",
+    designation: "HR Coordinator",
+    location: "Islamabad, Pakistan",
+    avatar:
+      "https://images.pexels.com/photos/2379006/pexels-photo-2379006.jpeg?auto=compress&cs=tinysrgb&w=400",
+    role: "Coordinator",
+  },
+  {
+    id: "44",
     name: "Asifa",
     email: "asifa@pts360.com",
     designation: "Policy Specialist",

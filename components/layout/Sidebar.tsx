@@ -16,11 +16,11 @@ import {
   User,
   Settings,
   LogOut,
-  Menu,
   X,
   ChevronLeft,
   ChevronRight,
   Building2,
+  ListTodo,
 } from "lucide-react";
 import { Department, departments } from "@/constants/sampleData";
 
@@ -56,7 +56,13 @@ export function Sidebar({
       href: "/dashboard/goals",
       icon: Target,
       label: "Goals",
-      roles: ["CEO", "HOD", "Manager", "Coordinator"],
+      roles: ["CEO", "HOD"],
+    },
+    {
+      href: "/dashboard/tasks",
+      icon: ListTodo,
+      label: "Tasks",
+      roles: ["Manager", "Coordinator"],
     },
     {
       href: "/dashboard",

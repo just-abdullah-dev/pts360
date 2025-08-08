@@ -1,13 +1,14 @@
 import Link from "next/link";
 
-import { departments } from "@/constants/sampleData";
+import { departments, sampleUsers } from "@/constants/sampleData";
 import { ArrowUpRight, Building } from "lucide-react";
+import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export function DepartmentsCEOView() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {departments.map((item, idx) => {
-        
         return (
           <Link
             href={`/dashboard/departments/${item.slug}`}
@@ -17,18 +18,39 @@ export function DepartmentsCEOView() {
                        p-4 shadow-md hover:shadow-lg transition-all duration-300
                        hover:border-orange-400 dark:hover:border-orange-600"
           >
-            <div className="flex items-center gap-4">
-              
-              <h3 className="text-lg font-semibold group-hover:text-orange-500 duration-300">
+            <div className="grid items-start grid-cols-4 gap-4">
+              <h3 className="text-[16px] col-span-3 font-semibold group-hover:text-orange-500 duration-300 line-clamp-1">
                 {item.title}
               </h3>
+              <Image
+                src={`/${item.slug}.png`}
+                alt="Department Icon"
+                width={60}
+                height={60}
+                className=" col-span-1 p-[3px] bg-white rounded-lg"
+              />
             </div>
 
-            <p className="mt-3 text-xs text-gray-600 dark:text-gray-400 line-clamp-2">
-              {"Click to explore this department and its details."}
-            </p>
+            
+            <div className="flex -space-x-3 mt-3">
+              {sampleUsers.slice(0 + idx, 6 + idx).map((item, index) => (
+                <Avatar
+                  key={index}
+                  className={`h-8 w-8 border-gray-200 dark:border-gray-600 transition-colors group-hover:border-orange-400 border-[1px] `}
+                >
+                  <AvatarImage src={item?.avatar} alt={item?.name} />
+                  <AvatarFallback className="text-[10px]">
+                    {item?.name?.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+              ))}
+              <Avatar key={"last"} className="h-8 w-8 border-gray-200 dark:border-gray-600 transition-colors group-hover:border-orange-400 border-[1px]">
+                <AvatarImage src={""} alt={"..."} />
+                <AvatarFallback className="text-[16px]">{"..."}</AvatarFallback>
+              </Avatar>
+            </div>
 
-            <span className="absolute top-2 transition-all group-hover:top-1 group-hover:right-1 right-2 text-sm text-gray-400 group-hover:text-orange-500">
+            {/* <span className="absolute top-2 transition-all group-hover:top-1 group-hover:right-1 right-2 text-sm text-gray-400 group-hover:text-orange-500">
                 <div
                 className="flex h-8 w-8 items-center justify-center rounded-full 
                               bg-orange-100 text-orange-600 group-hover:bg-orange-500 
@@ -37,7 +59,7 @@ export function DepartmentsCEOView() {
                 <ArrowUpRight className="h-5 w-5" />
               </div>
              
-            </span>
+            </span> */}
           </Link>
         );
       })}
