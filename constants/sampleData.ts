@@ -68,18 +68,76 @@ export interface Department {
   id: string;
   title: string;
   slug: string;
+  hod?: {
+    name?: string;
+    avatar?: string;
+  };
 }
 
 export const departments: Department[] = [
-  { id: "1", title: "Human Resources", slug: "hr" },
-  { id: "2", title: "Finance", slug: "finance" },
-  { id: "3", title: "Operations", slug: "operations" },
-  { id: "4", title: "Marketing", slug: "marketing" },
-  { id: "5", title: "Sales", slug: "sales" },
-  { id: "6", title: "IT", slug: "it" },
-  { id: "7", title: "Legal", slug: "legal" },
-  { id: "10", title: "Administration", slug: "administration" },
-  { id: "11", title: "Logistics", slug: "logistics" },
+  {
+    id: "1",
+    title: "Human Resources",
+    slug: "hr",
+    hod: {
+      name: "Ahmed",
+      avatar:
+        "https://images.pexels.com/photos/2379003/pexels-photo-2379003.jpeg?auto=compress&cs=tinysrgb&w=400",
+    },
+  },
+  {
+    id: "2",
+    title: "Finance",
+    slug: "finance",
+    hod: {
+      name: "Sara",
+      avatar:
+        "https://images.pexels.com/photos/2379003/pexels-photo-2379008.jpeg?auto=compress&cs=tinysrgb&w=400",
+    },
+  },
+  {
+    id: "3",
+    title: "Operations",
+    slug: "operations",
+    hod: {
+      name: "Ali",
+      avatar:
+        "https://images.pexels.com/photos/2379003/pexels-photo-2379003.jpeg?auto=compress&cs=tinysrgb&w=400",
+    },
+  },
+  {
+    id: "4",
+    title: "Marketing",
+    slug: "marketing",
+    hod: {
+      name: "Zara",
+      avatar:
+        "https://images.pexels.com/photos/2379003/pexels-photo-2379009.jpeg?auto=compress&cs=tinysrgb&w=400",
+    },
+  },
+  {
+    id: "5",
+    title: "Sales",
+    slug: "sales",
+    hod: {
+      name: "Omar",
+      avatar:
+        "https://images.pexels.com/photos/2379003/pexels-photo-2379006.jpeg?auto=compress&cs=tinysrgb&w=400",
+    },
+  },
+  {
+    id: "6",
+    title: "IT",
+    slug: "it",
+    hod: {
+      name: "Laila",
+      avatar:
+        "https://images.pexels.com/photos/2379003/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400",
+    },
+  },
+  { id: "7", title: "Legal", slug: "legal", hod: { name: "Khan", avatar: "" } },
+  { id: "10", title: "Administration", slug: "administration", hod: { name: "Ali", avatar: "" } },
+  { id: "11", title: "Logistics", slug: "logistics", hod: { name: "Zara", avatar: "" } },
 ];
 
 export const sampleUsers: User[] = [
@@ -205,7 +263,7 @@ export const sampleGoals: Goal[] = [
     description:
       "Complete recruitment process for new crew members in KPK region",
     label: "Recruitment",
-    
+
     department: "IT",
     assignees: ["2"],
     progress: 100,

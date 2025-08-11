@@ -135,15 +135,9 @@ export default function TeamGoalView() {
       </div>
 
       {/* Tabs */}
-      <div
-        className="space-y-2"
-      >
+      <div className="space-y-2">
         <div className="flex justify-end items-center">
-
-
           <div className="flex items-center space-x-2">
-   
-
             <Button
               variant="outline"
               size="sm"
@@ -160,281 +154,293 @@ export default function TeamGoalView() {
         </div>
 
         {/* My tasks */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-gray-50 dark:bg-gray-700">
-                  <TableHead className="w-8"></TableHead>
-                  <TableHead>Goal Title</TableHead>
-                  <TableHead>Label</TableHead>
-                  <TableHead>Assignee</TableHead>
-                  <TableHead>Progress</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Due Date</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {goals.map((goal) => (
-                  <>
-                    {/* Goal Row */}
-                    <TableRow
-                      key={goal.id}
-                      className="hover:bg-gray-50 dark:hover:bg-gray-700"
-                    >
-                      <TableCell>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => toggleGoalExpansion(goal.id)}
-                          className="p-1"
-                        >
-                          {expandedGoals.has(goal.id) ? (
-                            <ChevronDown className="h-5 w-5" />
-                          ) : (
-                            <ChevronRight className="h-5 w-5" />
-                          )}
-                        </Button>
-                      </TableCell>
-                      <TableCell>
-                        <span className=" line-clamp-1 font-medium">
-                          {goal.title}
+        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-gray-50 dark:bg-gray-700">
+                <TableHead className="w-8"></TableHead>
+                <TableHead>Goal Title</TableHead>
+                <TableHead>Label</TableHead>
+                <TableHead>Assignee</TableHead>
+                <TableHead>Progress</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Due Date</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {goals.map((goal) => (
+                <>
+                  {/* Goal Row */}
+                  <TableRow
+                    key={goal.id}
+                    className="hover:bg-gray-50 dark:hover:bg-gray-700"
+                  >
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleGoalExpansion(goal.id)}
+                        className="p-1"
+                      >
+                        {expandedGoals.has(goal.id) ? (
+                          <ChevronDown className="h-5 w-5" />
+                        ) : (
+                          <ChevronRight className="h-5 w-5" />
+                        )}
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <span className=" line-clamp-1 font-medium">
+                        {goal.title}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="secondary"
+                        className="bg-gray-100 text-gray-700"
+                      >
+                        {goal.label}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>{renderAssignees(goal.assignees)}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center space-x-2">
+                        <Progress
+                          value={goal.progress}
+                          className="flex-1 h-1"
+                        />
+                        <span className="text-[11px] text-gray-600 dark:text-gray-300">
+                          {goal.progress}%
                         </span>
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          variant="secondary"
-                          className="bg-gray-100 text-gray-700"
-                        >
-                          {goal.label}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>{renderAssignees(goal.assignees)}</TableCell>
-                      <TableCell>
-                        <div className="flex items-center space-x-2">
-                          <Progress
-                            value={goal.progress}
-                            className="flex-1 h-1"
-                          />
-                          <span className="text-[11px] text-gray-600 dark:text-gray-300">
-                            {goal.progress}%
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          variant="outline"
-                          className={getStatusColor(goal.status) + " "}
-                        >
-                          {goal.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <span className="text-xs">{new Date(goal.dueDate).toLocaleDateString()}</span>
-                      </TableCell>
-                    </TableRow>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant="outline"
+                        className={getStatusColor(goal.status) + " "}
+                      >
+                        {goal.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-xs">
+                        {new Date(goal.dueDate).toLocaleDateString()}
+                      </span>
+                    </TableCell>
+                  </TableRow>
 
-                    {/* Jobs Rows (when goal is expanded) */}
-                    {expandedGoals.has(goal.id) && (
-                      <>
-                        <TableRow className="bg-orange-50 dark:bg-orange-900/20">
-                          <TableCell colSpan={8} className="py-2">
-                            <div>
-                              <div className=" grid grid-cols-1 md:grid-cols-3">
-                                <div className=" flex gap-2 items-center">
-                                  <p className="text-xs text-gray-500">Created On:</p>
-                                  <p className="text-xs font-medium">
-                                    {new Date(goal.createdAt).toLocaleDateString()}
-                                  </p>
-                                </div>
-                                <div className=" flex gap-2 items-center">
-                                  <p className="text-xs text-gray-500">Expected Start Date:</p>
-                                  <p className="text-xs font-medium">
-                                    {new Date(goal.startDate).toLocaleDateString()}
-                                  </p>
-                                </div>
-                                <div className=" flex gap-2 items-center">
-                                  <p className="text-xs text-gray-500">Expected Due Date:</p>
-                                  <p className="text-xs font-medium">
-                                    <span className="text-xs">{new Date(goal.dueDate).toLocaleDateString()}</span>
-                                  </p>
-                                </div>
+                  {/* Jobs Rows (when goal is expanded) */}
+                  {expandedGoals.has(goal.id) && (
+                    <>
+                      <TableRow className="bg-orange-50 dark:bg-orange-900/20">
+                        <TableCell colSpan={8} className="py-2">
+                          <div>
+                            <div className=" grid grid-cols-1 md:grid-cols-3">
+                              <div className=" flex gap-2 items-center">
+                                <p className="text-xs text-gray-500">
+                                  Created On:
+                                </p>
+                                <p className="text-xs font-medium">
+                                  {new Date(
+                                    goal.createdAt
+                                  ).toLocaleDateString()}
+                                </p>
                               </div>
-                              <p className=" text-xs py-1 px-2 mt-1 bg-gray-200/50 rounded-lg">
-                              {goal.description}</p>
-                            </div>
-                            <div className="flex items-center justify-between mt-2">
-                              <span className="text-xs font-medium text-orange-700 dark:text-orange-300">
-                                Jobs - (Total {goal.jobs.length} Jobs)
-                              </span>
-                            
-                            </div>
-                          </TableCell>
-                        </TableRow>
-
-                        {goal.jobs.map((job) => (
-                          <>
-                            <TableRow
-                              key={job.id}
-                              className="bg-orange-25 dark:bg-orange-900/10"
-                            >
-                              <TableCell className="">
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => toggleJobExpansion(job.id)}
-                                  className="p-1"
-                                >
-                                  {expandedJobs.has(job.id) ? (
-                                    <ChevronDown className="h-4 w-4" />
-                                  ) : (
-                                    <ChevronRight className="h-4 w-4" />
-                                  )}
-                                </Button>
-                              </TableCell>
-                              <TableCell>
-                                <div className="flex items-center space-x-2">
-                                  <span className="text-[11px]">
-                                    {job.title}
+                              <div className=" flex gap-2 items-center">
+                                <p className="text-xs text-gray-500">
+                                  Expected Start Date:
+                                </p>
+                                <p className="text-xs font-medium">
+                                  {new Date(
+                                    goal.startDate
+                                  ).toLocaleDateString()}
+                                </p>
+                              </div>
+                              <div className=" flex gap-2 items-center">
+                                <p className="text-xs text-gray-500">
+                                  Expected Due Date:
+                                </p>
+                                <p className="text-xs font-medium">
+                                  <span className="text-xs">
+                                    {new Date(
+                                      goal.dueDate
+                                    ).toLocaleDateString()}
                                   </span>
-                                </div>
-                              </TableCell>
-                              <TableCell>
-                                <Badge
-                                  variant="secondary"
-                                  className="bg-gray-100 text-gray-700 text-[10px]"
-                                >
-                                  {job.label}
-                                </Badge>
-                              </TableCell>
-                              <TableCell className="text-[11px]">
-                                {renderAssignees(job.assignees)}
-                              </TableCell>
-                              <TableCell>
-                                <div className="flex items-center space-x-2">
-                                  <Progress
-                                    value={job.progress}
-                                    className="flex-1 h-1"
-                                  />
-                                  <span className="text-[10px] text-gray-600 dark:text-gray-300">
-                                    {job.progress}%
-                                  </span>
-                                </div>
-                              </TableCell>
-                              <TableCell>
-                                <Badge
-                                  variant="outline"
-                                  className={cn(
-                                    getStatusColor(job.status),
-                                    "text-[10px]"
-                                  )}
-                                >
-                                  {job.status}
-                                </Badge>
-                              </TableCell>
-                              <TableCell className="text-[11px]">
-                                {new Date(job.dueDate).toLocaleDateString()}
-                              </TableCell>
-                              <TableCell>
-                                <Button variant="ghost" size="sm">
-                                  <MoreHorizontal className="h-3 w-3" />
-                                </Button>
-                              </TableCell>
-                            </TableRow>
+                                </p>
+                              </div>
+                            </div>
+                            <p className=" text-xs py-1 px-2 mt-1 bg-gray-200/50 rounded-lg">
+                              {goal.description}
+                            </p>
+                          </div>
+                          <div className="flex items-center justify-between mt-2">
+                            <span className="text-xs font-medium text-orange-700 dark:text-orange-300">
+                              Jobs - (Total {goal.jobs.length} Jobs)
+                            </span>
+                          </div>
+                        </TableCell>
+                      </TableRow>
 
-                            {/* Tasks Rows (when job is expanded) */}
-                            {expandedJobs.has(job.id) && (
-                              <>
-                                <TableRow className="bg-orange-100 dark:bg-orange-800/20 text-[11px]">
-                                  <TableCell colSpan={8} className="py-2 ">
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-[10px] font-medium text-orange-700 dark:text-orange-300">
-                                        Tasks - (Total {job.tasks.length} Tasks)
+                      {goal.jobs.map((job) => (
+                        <>
+                          <TableRow
+                            key={job.id}
+                            className="bg-orange-25 dark:bg-orange-900/10"
+                          >
+                            <TableCell className="">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => toggleJobExpansion(job.id)}
+                                className="p-1"
+                              >
+                                {expandedJobs.has(job.id) ? (
+                                  <ChevronDown className="h-4 w-4" />
+                                ) : (
+                                  <ChevronRight className="h-4 w-4" />
+                                )}
+                              </Button>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center space-x-2">
+                                <span className="text-[11px]">{job.title}</span>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Badge
+                                variant="secondary"
+                                className="bg-gray-100 text-gray-700 text-[10px]"
+                              >
+                                {job.label}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-[11px]">
+                              {renderAssignees(job.assignees)}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center space-x-2">
+                                <Progress
+                                  value={job.progress}
+                                  className="flex-1 h-1"
+                                />
+                                <span className="text-[10px] text-gray-600 dark:text-gray-300">
+                                  {job.progress}%
+                                </span>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Badge
+                                variant="outline"
+                                className={cn(
+                                  getStatusColor(job.status),
+                                  "text-[10px]"
+                                )}
+                              >
+                                {job.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-[11px]">
+                              {new Date(job.dueDate).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell>
+                              <Button variant="ghost" size="sm">
+                                <MoreHorizontal className="h-3 w-3" />
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+
+                          {/* Tasks Rows (when job is expanded) */}
+                          {expandedJobs.has(job.id) && (
+                            <>
+                              <TableRow className="bg-orange-100 dark:bg-orange-800/20 text-[11px]">
+                                <TableCell colSpan={8} className="py-2 ">
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-[10px] font-medium text-orange-700 dark:text-orange-300">
+                                      Tasks - (Total {job.tasks.length} Tasks)
+                                    </span>
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={() => setShowAddTask(true)}
+                                      className="text-orange-600 hover:text-orange-700 text-[10px]"
+                                    >
+                                      <Plus className="h-3 w-3 mr-1" />
+                                      Add Task
+                                    </Button>
+                                  </div>
+                                </TableCell>
+                              </TableRow>
+
+                              {job.tasks.map((task) => (
+                                <TableRow
+                                  key={task.id}
+                                  className="bg-orange-75 dark:bg-orange-900/5 text-[10px]"
+                                >
+                                  <TableCell className="">
+                                    <div className="w-4 h-4 border-2 opacity-0 border-gray-400 rounded"></div>
+                                  </TableCell>
+                                  <TableCell>
+                                    <span className="text-[10px]">
+                                      {task.title}
+                                    </span>
+                                  </TableCell>
+                                  <TableCell>
+                                    <Badge
+                                      variant="secondary"
+                                      className="bg-gray-100 text-gray-700 text-[10px]"
+                                    >
+                                      {task.label}
+                                    </Badge>
+                                  </TableCell>
+                                  <TableCell className="text-[10px]">
+                                    {renderAssignees([task.assignees[0]])}
+                                    {/* {sampleUsers.find(u => u.id === task.assignees[0])?.name} */}
+                                  </TableCell>
+                                  <TableCell>
+                                    <div className="flex items-center space-x-2">
+                                      <Progress
+                                        value={task.progress}
+                                        className="flex-1 h-1"
+                                      />
+                                      <span className="text-[10px] text-gray-600 dark:text-gray-300">
+                                        {task.progress}%
                                       </span>
-                                      <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() => setShowAddTask(true)}
-                                        className="text-orange-600 hover:text-orange-700 text-[10px]"
-                                      >
-                                        <Plus className="h-3 w-3 mr-1" />
-                                        Add Task
-                                      </Button>
                                     </div>
                                   </TableCell>
+                                  <TableCell>
+                                    <Badge
+                                      variant="outline"
+                                      className={cn(
+                                        getStatusColor(task.status),
+                                        "text-[10px]"
+                                      )}
+                                    >
+                                      {task.status}
+                                    </Badge>
+                                  </TableCell>
+                                  <TableCell className="text-[10px]">
+                                    {new Date(
+                                      task.dueDate
+                                    ).toLocaleDateString()}
+                                  </TableCell>
+                                  <TableCell>
+                                    <Button variant="ghost" size="sm">
+                                      <MoreHorizontal className="h-3 w-3" />
+                                    </Button>
+                                  </TableCell>
                                 </TableRow>
-
-                                {job.tasks.map((task) => (
-                                  <TableRow
-                                    key={task.id}
-                                    className="bg-orange-75 dark:bg-orange-900/5 text-[10px]"
-                                  >
-                                    <TableCell className="">
-                                      <div className="w-4 h-4 border-2 opacity-0 border-gray-400 rounded"></div>
-                                    </TableCell>
-                                    <TableCell>
-                                      <span className="text-[10px]">
-                                        {task.title}
-                                      </span>
-                                    </TableCell>
-                                    <TableCell>
-                                      <Badge
-                                        variant="secondary"
-                                        className="bg-gray-100 text-gray-700 text-[10px]"
-                                      >
-                                        {task.label}
-                                      </Badge>
-                                    </TableCell>
-                                    <TableCell className="text-[10px]">
-                                      {renderAssignees([task.assignees[0]])}
-                                      {/* {sampleUsers.find(u => u.id === task.assignees[0])?.name} */}
-                                    </TableCell>
-                                    <TableCell>
-                                      <div className="flex items-center space-x-2">
-                                        <Progress
-                                          value={task.progress}
-                                          className="flex-1 h-1"
-                                        />
-                                        <span className="text-[10px] text-gray-600 dark:text-gray-300">
-                                          {task.progress}%
-                                        </span>
-                                      </div>
-                                    </TableCell>
-                                    <TableCell>
-                                      <Badge
-                                        variant="outline"
-                                        className={cn(
-                                          getStatusColor(task.status),
-                                          "text-[10px]"
-                                        )}
-                                      >
-                                        {task.status}
-                                      </Badge>
-                                    </TableCell>
-                                    <TableCell className="text-[10px]">
-                                      {new Date(
-                                        task.dueDate
-                                      ).toLocaleDateString()}
-                                    </TableCell>
-                                    <TableCell>
-                                      <Button variant="ghost" size="sm">
-                                        <MoreHorizontal className="h-3 w-3" />
-                                      </Button>
-                                    </TableCell>
-                                  </TableRow>
-                                ))}
-                              </>
-                            )}
-                          </>
-                        ))}
-                      </>
-                    )}
-                  </>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-
-   
+                              ))}
+                            </>
+                          )}
+                        </>
+                      ))}
+                    </>
+                  )}
+                </>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
       {/* Add Task Modal */}
       <AddTaskModal open={showAddTask} onOpenChange={setShowAddTask} />

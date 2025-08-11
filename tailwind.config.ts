@@ -84,6 +84,17 @@ const config: Config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
+    fontSize: {
+      xs: "10px",
+      sm: "12px",
+      base: "14px",
+      lg: "16px",
+      xl: "18px",
+      "2xl": "20px",
+      "3xl": "24px",
+      "4xl": "28px",
+      "5xl": "32px",
+    },
   },
   plugins: [require('tailwindcss-animate')],
 };

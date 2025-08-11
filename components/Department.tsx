@@ -1,17 +1,24 @@
 "use client";
-import { departments } from '@/constants/sampleData'
-import React from 'react';
+import { departments } from "@/constants/sampleData";
+import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import DepartmentPerformanceTab from './DepartmentPerformanceTab';
-import TeamPerformanceTab from './TeamPerformanceTab';
-import MyPerformanceTab from './MyPerformanceTab';
+import DepartmentPerformanceTab from "./DepartmentPerformanceTab";
+import TeamPerformanceTab from "./TeamPerformanceTab";
+import MyPerformanceTab from "./MyPerformanceTab";
+import { Plus } from "lucide-react";
+import { Button } from "./ui/button";
+import { AddGoalModal } from "@/components/modals/AddGoalModal";
+import { useAppSelector } from "@/store/hooks";
 
-export default function Department({slug}: {slug: string}) {
-  const department = departments.filter((item)=> item.slug === slug)[0];
+export default function Department({ slug }: { slug: string }) {
+  const department = departments.filter((item) => item.slug === slug)[0];
+  const { user } = useAppSelector((state) => state.auth);
+
+  const [showAddGoal, setShowAddGoal] = useState(false);
 
   return (
-    <div className="p-6 space-y-2">
+    <div className="p-4 space-y-2">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
@@ -19,7 +26,15 @@ export default function Department({slug}: {slug: string}) {
             {department.title}
           </h1>
         </div>
-     
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setShowAddGoal(true)}
+          className="bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-400"
+        >
+          <Plus className="h-4 w-4 mr-2 dar:text-gray-300" />
+          Add new Goal
+        </Button>
       </div>
       {/* Tabs */}
       <Tabs defaultValue="department-performance" className="space-y-2">
@@ -28,7 +43,10 @@ export default function Department({slug}: {slug: string}) {
             Department Performance
           </TabsTrigger>
           <TabsTrigger value="team-performance">Team Performance</TabsTrigger>
-          <TabsTrigger value="my-performance">My Performance</TabsTrigger>
+           {["HOD", "Manager", "Coordinator"].includes(`${user?.role}`) && (
+  
+            <TabsTrigger value="my-performance">My Performance</TabsTrigger>
+          )}
         </TabsList>
 
         {/* Team's Performance Tab */}
@@ -46,6 +64,12 @@ export default function Department({slug}: {slug: string}) {
           <MyPerformanceTab />
         </TabsContent>
       </Tabs>
+      {/* Add Goal Modal */}
+      <AddGoalModal
+        department={department}
+        open={showAddGoal}
+        onOpenChange={setShowAddGoal}
+      />
     </div>
-  )
+  );
 }

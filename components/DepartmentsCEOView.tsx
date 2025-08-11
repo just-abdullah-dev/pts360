@@ -4,6 +4,7 @@ import { departments, sampleUsers } from "@/constants/sampleData";
 import { ArrowUpRight, Building } from "lucide-react";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { it } from "node:test";
 
 export function DepartmentsCEOView() {
   return (
@@ -31,8 +32,19 @@ export function DepartmentsCEOView() {
               />
             </div>
 
-            
-            <div className="flex -space-x-3 mt-3">
+            <div className=" flex gap-4 items-center">
+              <Avatar
+                key={"hod image"}
+                className={`h-8 w-8 border-gray-200 dark:border-gray-600 transition-colors group-hover:border-orange-400 border-[1px] `}
+              >
+                <AvatarImage src={item?.hod?.avatar} alt={item?.hod?.name} />
+                <AvatarFallback className="text-[10px]">
+                  {item?.hod?.name?.charAt(0)}
+                </AvatarFallback>
+              </Avatar>
+              <h3 className=" font-semibold text-sm">{item?.hod?.name}</h3>
+            </div>
+            {/* <div className="flex -space-x-3 mt-3">
               {sampleUsers.slice(0 + idx, 6 + idx).map((item, index) => (
                 <Avatar
                   key={index}
@@ -44,11 +56,14 @@ export function DepartmentsCEOView() {
                   </AvatarFallback>
                 </Avatar>
               ))}
-              <Avatar key={"last"} className="h-8 w-8 border-gray-200 dark:border-gray-600 transition-colors group-hover:border-orange-400 border-[1px]">
+              <Avatar
+                key={"last"}
+                className="h-8 w-8 border-gray-200 dark:border-gray-600 transition-colors group-hover:border-orange-400 border-[1px]"
+              >
                 <AvatarImage src={""} alt={"..."} />
                 <AvatarFallback className="text-[16px]">{"..."}</AvatarFallback>
               </Avatar>
-            </div>
+            </div> */}
 
             {/* <span className="absolute top-2 transition-all group-hover:top-1 group-hover:right-1 right-2 text-sm text-gray-400 group-hover:text-orange-500">
                 <div
