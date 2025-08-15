@@ -273,7 +273,7 @@ export function AddGoalModal({
                             htmlFor={user.id}
                             className="text-sm cursor-pointer"
                           >
-                            {user.name} - {user.designation}
+                            {user?.name} - {user?.name}
                           </label>
                         </div>
                       ))}

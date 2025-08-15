@@ -1,45 +1,103 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User, sampleUsers } from '@/constants/sampleData';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { getAuthToken } from "@/lib/auth";
+import { customFetch } from "@/lib/utils";
 
-// Load from localStorage
-const savedUser = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
-const savedAuth = typeof window !== 'undefined' ? localStorage.getItem('isAuthenticated') : null;
+// Types
+export interface User {
+  id?: string;
+  userName?: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string | null;
+  emailConfirmed?: boolean;
+  status?: string;
+  statusValue?: number;
+  isDeleted?: boolean;
+  lastLoginDate?: string;
+  lockoutEnabled?: boolean;
+  lockoutEnd?: string | null;
+  accessFailedCount?: number;
+  isLockedOut?: boolean;
+  roles?: string[];
+  position?: {
+    id?: string;
+    title?: string;
+    department?: string | null;
+    location?: string | null;
+  };
+}
 
 interface AuthState {
   user: User | null;
-  isAuthenticated: boolean;
-  users: User[];
+  isLoading: boolean;
 }
+
+// Load saved user from sessionStorage
+const savedUser =
+  typeof window !== "undefined" ? sessionStorage.getItem("user") : null;
 
 const initialState: AuthState = {
   user: savedUser ? JSON.parse(savedUser) : null,
-  isAuthenticated: savedAuth === 'true',
-  users: sampleUsers,
+  isLoading: false,
 };
 
+// Async thunk for fetching user
+export const getUser = createAsyncThunk<User | null>(
+  "auth/getUser",
+  async (_, { rejectWithValue }) => {
+    const token = getAuthToken();
+
+    // If no token → redirect
+    if (!token) {
+      window.location.href = "/login";
+      return rejectWithValue("No token");
+    }
+
+    try {
+      const res = await customFetch("/User/profile", { method: "GET" });
+      const data = await res.json();
+
+      if (data.success) {
+        sessionStorage.setItem("user", JSON.stringify(data.data));
+        return data.data as User;
+      } else {
+        window.location.href = "/login";
+        return rejectWithValue("User fetch failed");
+      }
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue("Error fetching user");
+    }
+  }
+);
+
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<{ email: string; password: string }>) => {
-      const user = state.users.find(u => u.email === action.payload.email);
-      if (user && action.payload.password === 'password123') {
-        state.user = user;
-        state.isAuthenticated = true;
-        // Save to localStorage
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('isAuthenticated', 'true');
-      }
-    },
     logout: (state) => {
       state.user = null;
-      state.isAuthenticated = false;
-      // Remove from localStorage
-      localStorage.removeItem('user');
-      localStorage.setItem('isAuthenticated', 'false');
+      document.cookie =
+        "auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      sessionStorage.removeItem("user");
+      window.location.href = "/login";
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUser.fulfilled, (state, action: PayloadAction<User | null>) => {
+        state.user = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getUser.rejected, (state) => {
+        state.isLoading = false;
+      });
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

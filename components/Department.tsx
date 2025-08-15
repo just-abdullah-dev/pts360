@@ -43,10 +43,9 @@ export default function Department({ slug }: { slug: string }) {
             Department Performance
           </TabsTrigger>
           <TabsTrigger value="team-performance">Team Performance</TabsTrigger>
-           {["HOD", "Manager", "Coordinator"].includes(`${user?.role}`) && (
-  
-            <TabsTrigger value="my-performance">My Performance</TabsTrigger>
-          )}
+          {user?.roles?.some((role) =>
+            ["Manager", "Coordinator", "DepartmentHead"].includes(role)
+          ) && <TabsTrigger value="my-performance">My Performance</TabsTrigger>}
         </TabsList>
 
         {/* Team's Performance Tab */}

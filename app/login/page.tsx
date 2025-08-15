@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { login } from "@/store/slices/authSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,39 +14,49 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { BarChart3 } from "lucide-react";
+import { customFetch } from "@/lib/utils";
+import { toast } from "@/hooks/use-toast";
+import { getUser } from "@/store/slices/authSlice";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("ceo@pts360.com");
-  const [password, setPassword] = useState("password123");
+  const [email, setEmail] = useState("admin@cheezious.com");
+  const [password, setPassword] = useState("CheezPTS@123");
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  const { user } = useAppSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (user) {
-      document.cookie = "auth-token=authenticated; path=/; max-age=86400";
-      document.cookie = `role=${user?.role}; path=/; max-age=86400`;
-      document.cookie = `departmentSlug=${user?.departmentSlug}; path=/; max-age=86400`;
-      if (user?.role === "HOD") {
-        router.push(`/dashboard/departments/${user.departmentSlug}`);
-      } else if (["Manager", "Coordinator"].includes(user?.role ?? "")) {
-        router.push(`/dashboard/tasks`);
-      } else {
-        router.push("/dashboard");
-      }
-    }
-  }, [user]);
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      dispatch(login({ email, password }));
+    try {
+      const res = await customFetch("/User/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, rememberMe: true }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        toast({
+          description: data.data.message,
+        });
+        document.cookie = `auth-token=${data.data.token}; path=/; max-age=86400`;
+        dispatch(getUser());
+        router.refresh();
+      } else {
+        toast({
+          variant: "destructive",
+          description: data.message || "Something went wrong",
+        });
+      }
+    } catch (err: any) {
+      toast({
+        variant: "destructive",
+        description: err.message || "Something went wrong",
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (

@@ -1,32 +1,39 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { login } from "@/store/slices/authSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
-import { sampleUsers } from "@/constants/sampleData";
 import { useRouter } from "next/navigation";
-import Loading from "@/components/Loading";
+import LoadingContent from "@/components/LoadingContent";
+import { getUser } from "@/store/slices/authSlice";
+import { getAuthToken } from "@/lib/auth";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { user, isLoading } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
-
   useEffect(() => {
-    // Auto-login for demo purposes if auth token exists
-    const authToken = document.cookie.includes("auth-token=authenticated");
-    // if (authToken && !isAuthenticated) {
-    //   // Auto-login as first user for demo
-    //   dispatch(login({ email: 'admin@pts360.com', password: 'password123' }));
-    // }else
-    if (!authToken && !isAuthenticated) {
-      router.push("/login");
+    if (getAuthToken()) {
+      if (!isLoading) {
+        if (!user) {
+          console.log("User is null, fetching...");
+          dispatch(getUser());
+        } else {
+          if (user.roles?.includes("SystemAdmin")) {
+            router.push("/dashboard");
+          } else if (user.roles?.includes("Manager")) {
+            router.push("/dashboard/departments/hr");
+          }
+        }
+      }
+    } else {
+      console.log("no token found login please");
+      window.location.href = "/login";
     }
-  }, [isAuthenticated, dispatch]);
+  }, [user, isLoading, dispatch, router]);
 
-  if (!isAuthenticated) {
-    return <Loading />;
+  if (isLoading) {
+    return <LoadingContent />;
   }
 
   return <DashboardLayout>{children}</DashboardLayout>;

@@ -47,13 +47,13 @@ export function Header({ onMobileMenuToggle, isMobile }: HeaderProps) {
           <div className="hidden lg:flex items-center space-x-2">
             <div>
               <h1 className=" font-semibold text-gray-900 dark:text-white">
-                Hello {user.name}!
+                Hello {user?.firstName}!
               </h1>
               <div className="flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-300">
-                <span>{user.designation}</span>
+                <span>{user?.position?.title}</span>
                 <span>•</span>
                 <MapPin className="h-3 w-3" />
-                <span>{user.location}</span>
+                <span>{"user.location"}</span>
               </div>
             </div>
           </div>
@@ -103,8 +103,8 @@ export function Header({ onMobileMenuToggle, isMobile }: HeaderProps) {
         {/* User Avatar (Desktop) */}
         {/* {!isMobile && user && (
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+            <AvatarImage src={user.userName} alt={user?.firstName} />
+            <AvatarFallback>{user?.firstName?.charAt(0)}</AvatarFallback>
           </Avatar>
         )} */}
       </div>

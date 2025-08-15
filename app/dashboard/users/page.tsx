@@ -92,7 +92,7 @@ const users = [
     firstName: "Ayesha",
     lastName: "Raza",
     email: "ayesha.raza@example.com",
-    role: "HOD",
+    role: "DepartmentHead",
     department: "Marketing",
     departmentPosition: "Head of Department",
     location: "Karachi",
@@ -181,7 +181,7 @@ const roleOptions = [
   "CEO",
   "DIRECTOR",
   "ADMIN",
-  "HOD",
+  "DepartmentHead",
   "MANAGER",
   "COORDINATOR",
 ];
@@ -247,13 +247,13 @@ export default function UsersPage() {
                     />
                   </TableCell>
                   <TableCell className="font-mediumflex items-cente">
-                    {user.firstName} {user.lastName}
+                    {user?.firstName} {user.lastName}
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.role}</TableCell>
                   <TableCell>{user.department}</TableCell>
                   <TableCell>{user.departmentPosition}</TableCell>
-                  <TableCell>{user.location}</TableCell>
+                  <TableCell>{"user.location"}</TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>

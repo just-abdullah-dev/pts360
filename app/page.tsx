@@ -1,25 +1,20 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAppSelector } from '@/store/hooks';
-import Loading from '@/components/Loading';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Loading from "@/components/Loading";
+import { getAuthToken } from "@/lib/auth";
 
 export default function Home() {
   const router = useRouter();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
-    const authToken = document.cookie.includes('auth-token=authenticated');
-    
-    if (authToken || isAuthenticated) {
-      router.push('/dashboard');
+    if (getAuthToken()) {
+      router.push("/dashboard");
     } else {
-      router.push('/login');
+      router.push("/login");
     }
-  }, [isAuthenticated, router]);
+  }, [router]);
 
-  return (
-    <Loading />
-  );
+  return <Loading />;
 }

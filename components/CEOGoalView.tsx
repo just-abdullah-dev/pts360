@@ -756,7 +756,7 @@ export default function CEOGoalView() {
       </Tabs>
 
       {/* Add Goal Modal */}
-      <AddGoalModal department={departments.filter((item)=>item.slug === user?.departmentSlug || '')[0] } open={showAddGoal} onOpenChange={setShowAddGoal} />
+      <AddGoalModal department={departments.filter((item)=>item.slug === "user?.departmentSlug" || '')[0] } open={showAddGoal} onOpenChange={setShowAddGoal} />
       {/* Add Job Modal */}
       <AddJobModal open={showAddJob} onOpenChange={setShowAddJob} />
       {/* Add Task Modal */}

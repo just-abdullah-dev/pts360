@@ -7,7 +7,7 @@ export interface User {
   avatar: string;
   departmentSlug?: string;
   role:
-    | "HOD"
+    | "DepartmentHead"
     | "CEO"
     | "Secretary"
     | "Manager"
@@ -160,7 +160,7 @@ export const sampleUsers: User[] = [
     departmentSlug: "hr",
     avatar:
       "https://images.pexels.com/photos/2379021/pexels-photo-2379021.jpeg?auto=compress&cs=tinysrgb&w=400",
-    role: "HOD",
+    role: "DepartmentHead",
   },
   {
     id: "103",
@@ -171,7 +171,7 @@ export const sampleUsers: User[] = [
     departmentSlug: "it",
     avatar:
       "https://images.pexels.com/photos/2379021/pexels-photo-2379021.jpeg?auto=compress&cs=tinysrgb&w=400",
-    role: "HOD",
+    role: "DepartmentHead",
   },
   {
     id: "104",
@@ -182,7 +182,7 @@ export const sampleUsers: User[] = [
     departmentSlug: "finance",
     avatar:
       "https://images.pexels.com/photos/2379021/pexels-photo-2379021.jpeg?auto=compress&cs=tinysrgb&w=400",
-    role: "HOD",
+    role: "DepartmentHead",
   },
   {
     id: "0",

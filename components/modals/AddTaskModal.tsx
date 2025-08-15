@@ -144,7 +144,7 @@ export function AddTaskModal({ open, onOpenChange }: AddTaskModalProps) {
               <SelectContent>
                 {sampleUsers.map((user) => (
                   <SelectItem key={user.id} value={user.id}>
-                    {user.name} - {user.designation}
+                    {user?.name} - {user?.designation}
                   </SelectItem>
                 ))}
               </SelectContent>

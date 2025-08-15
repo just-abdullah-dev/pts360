@@ -22,10 +22,10 @@ export default function TeamPage() {
           <Card key={user.id} className="hover:shadow-lg transition-shadow">
             <CardHeader className="text-center">
               <Avatar className="h-20 w-20 mx-auto mb-4">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="text-lg">{user.name.charAt(0)}</AvatarFallback>
+                <AvatarImage src={user.avatar} alt={user?.name} />
+                <AvatarFallback className="text-lg">{user?.name?.charAt(0)}</AvatarFallback>
               </Avatar>
-              <CardTitle className="text-lg">{user.name}</CardTitle>
+              <CardTitle className="text-lg">{user?.name}</CardTitle>
               <Badge variant="secondary" className="w-fit mx-auto">
                 {user.designation}
               </Badge>
@@ -34,7 +34,7 @@ export default function TeamPage() {
               <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                 <div className="flex items-center space-x-2">
                   <MapPin className="h-4 w-4" />
-                  <span>{user.location}</span>
+                  <span>{"user.location"}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Mail className="h-4 w-4" />

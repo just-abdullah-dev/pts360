@@ -27,13 +27,13 @@ export default function ProfilePage() {
           <Card className="lg:col-span-1">
             <CardHeader className="text-center">
               <Avatar className="h-24 w-24 mx-auto mb-4">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="text-2xl">{user.name.charAt(0)}</AvatarFallback>
+                <AvatarImage src={user.userName} alt={user.firstName} />
+                <AvatarFallback className="text-2xl">{user?.firstName?.charAt(0)}</AvatarFallback>
               </Avatar>
-              <CardTitle className="text-xl">{user.name}</CardTitle>
+              <CardTitle className="text-xl">{user?.firstName}</CardTitle>
               <CardDescription>
                 <Badge variant="secondary" className="mt-2">
-                  {user.designation}
+                  {user?.position?.title}
                 </Badge>
               </CardDescription>
             </CardHeader>
@@ -45,7 +45,7 @@ export default function ProfilePage() {
                 </div>
                 <div className="flex items-center space-x-3">
                   <MapPin className="h-4 w-4 text-gray-500" />
-                  <span>{user.location}</span>
+                  <span>{"user.location"}</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Calendar className="h-4 w-4 text-gray-500" />
@@ -73,11 +73,11 @@ export default function ProfilePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="firstName">First Name</Label>
-                  <Input id="firstName" defaultValue={user.name.split(' ')[0]} disabled />
+                  <Input id="firstName" defaultValue={user?.firstName?.split(' ')[0]} disabled />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="lastName">Last Name</Label>
-                  <Input id="lastName" defaultValue={user.name.split(' ')[1] || ''} disabled />
+                  <Input id="lastName" defaultValue={user?.firstName?.split(' ')[1] || ''} disabled />
                 </div>
               </div>
 
@@ -88,12 +88,12 @@ export default function ProfilePage() {
 
               <div className="space-y-2">
                 <Label htmlFor="designation">Designation</Label>
-                <Input id="designation" defaultValue={user.designation} disabled />
+                <Input id="designation" defaultValue={user?.position?.title} disabled />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="location">Location</Label>
-                <Input id="location" defaultValue={user.location} disabled />
+                <Input id="location" defaultValue={"user.location"} disabled />
               </div>
 
               <div className="space-y-2">
@@ -109,69 +109,7 @@ export default function ProfilePage() {
           </Card>
         </div>
 
-        {/* Additional Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Performance Stats */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Performance Overview</CardTitle>
-              <CardDescription>Your recent activity and achievements</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-4 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-orange-600">24</div>
-                  <div className="text-sm text-gray-500">Tasks Completed</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-blue-600">8</div>
-                  <div className="text-sm text-gray-500">Active Projects</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-green-600">95%</div>
-                  <div className="text-sm text-gray-500">On-time Rate</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-purple-600">12</div>
-                  <div className="text-sm text-gray-500">Team Members</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Recent Activity */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Your latest actions and updates</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <div className="flex-1">
-                    <p className="text-sm">Completed recruitment task</p>
-                    <p className="text-xs text-gray-500">2 hours ago</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <div className="flex-1">
-                    <p className="text-sm">Updated policy document</p>
-                    <p className="text-xs text-gray-500">1 day ago</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                  <div className="flex-1">
-                    <p className="text-sm">Created new goal</p>
-                    <p className="text-xs text-gray-500">3 days ago</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+       
       </div>
   );
 }

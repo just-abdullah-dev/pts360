@@ -15,9 +15,9 @@ export default function DashboardPage() {
 
   return (
     <div className="p-6 space-y-2">
-      {user?.role === "Admin" && <DepartmentAdminView />}
+      {user?.roles?.includes("SuperAdmin") && <DepartmentAdminView />}
 
-      {user?.role === "CEO" && (
+      {user?.roles?.includes("SystemAdmin") && (
         <>
           {/* Header */}
           <div className="flex justify-between items-center">

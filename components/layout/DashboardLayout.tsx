@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAppSelector } from '@/store/hooks';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 
@@ -13,7 +12,6 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -24,10 +22,6 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
-  if (!isAuthenticated) {
-    return null;
-  }
 
   return (
     <div className="h-screen flex bg-gray-50 dark:bg-gray-900">

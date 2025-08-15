@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { logout } from "@/store/slices/authSlice";
 import { cn } from "@/lib/utils";
@@ -22,7 +22,8 @@ import {
   Building2,
   ListTodo,
 } from "lucide-react";
-import { Department, departments } from "@/constants/sampleData";
+import useDepartments from "@/hooks/useDepartments";
+import { Department } from "@/lib/types";
 
 interface SidebarProps {
   collapsed: boolean;
@@ -42,21 +43,23 @@ export function Sidebar({
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const pathname = usePathname();
   const { user } = useAppSelector((state) => state.auth);
-
+  const {departments, isLoading} = useDepartments();
+  const router = useRouter();
   const dispatch = useAppDispatch();
+  
 
   const navigationItems = [
     {
       href: "/dashboard",
       icon: LayoutDashboard,
       label: "Cheezious",
-      roles: ["CEO"],
+      roles: ["SystemAdmin"],
     },
     {
       href: "/dashboard/goals",
       icon: Target,
       label: "Goals",
-      roles: ["CEO", "HOD"],
+      roles: ["SystemAdmin", "DepartmentHead"],
     },
     {
       href: "/dashboard/tasks",
@@ -74,19 +77,13 @@ export function Sidebar({
       href: "/dashboard/team",
       icon: Users,
       label: "Team",
-      roles: ["HOD"],
+      roles: ["DepartmentHead"],
     },
     { href: "/dashboard/users", icon: Users, label: "Users", roles: ["Admin"] },
   ];
 
   const handleLogout = () => {
     dispatch(logout());
-    document.cookie =
-      "auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    document.cookie = "role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    document.cookie =
-      "departmentSlug=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    window.location.href = "/login";
   };
 
   if (isMobile) {
@@ -103,11 +100,12 @@ export function Sidebar({
         {/* Mobile Sidebar */}
         <div
           className={cn(
-            "fixed left-0 top-0 z-50 h-full w-64 bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-in-out lg:hidden",
+            "fixed top-0 left-0 z-[100] h-screen w-64 bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-in-out lg:hidden",
             mobileOpen ? "translate-x-0" : "-translate-x-full"
           )}
         >
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+          {/* Top Bar */}
+          <div className="absolute top-0 left-0 right-0 h-16 flex items-center justify-between p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center">
                 <span className="text-white font-bold text-sm">P</span>
@@ -125,10 +123,14 @@ export function Sidebar({
             </Button>
           </div>
 
-          <nav className="flex-1 p-4">
+          {/* Scrollable nav area */}
+          <nav className="absolute top-16 bottom-20 left-0 right-0 overflow-y-auto p-4">
             <ul className="space-y-2">
               {navigationItems.map((item) => {
-                if (user && item.roles.includes(user.role)) {
+                if (
+                  user &&
+                  item?.roles?.some((role) => user?.roles?.includes(role))
+                ) {
                   return (
                     <li key={item.href}>
                       <Link
@@ -148,22 +150,50 @@ export function Sidebar({
                   );
                 }
               })}
+
+              {[...departments].map((item: Department) => {
+                if (
+              !user?.roles?.includes("SystemAdmin") &&
+              (!user?.roles?.includes("Manager") 
+              || "hr" !== item.slug
+            )
+            ) {
+              return null;
+            }
+                return (
+                  <Link
+                    href={`/dashboard/departments/${item.slug || "hr"}`}
+                    key={item.id}
+                    className={cn(
+                      "flex items-center px-3 py-[6px] rounded-lg text-sm font-medium transition-colors line-clamp-1 overflow-hidden",
+                      collapsed ? "justify-center" : "space-x-3",
+                      pathname.endsWith(item.slug || "hr")
+                        ? "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300"
+                        : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                    )}
+                    title={collapsed ? item.name : undefined}
+                  >
+                    <Building2 className="h-5 w-5 inline-block" />
+                    {!collapsed && <span>{item.name}</span>}
+                  </Link>
+                );
+              })}
             </ul>
           </nav>
 
-          {/* Mobile User Menu */}
-          <div className="border-t border-gray-200 dark:border-gray-700 p-4">
-            <div className="flex items-center space-x-3 mb-3">
+          {/* Bottom User Menu */}
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-4">
+            <div className="flex items-center space-x-3">
               <Avatar className="h-10 w-10">
-                <AvatarImage src={user?.avatar} alt={user?.name} />
-                <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+                <AvatarImage src={user?.userName} alt={user?.firstName} />
+                <AvatarFallback>{user?.firstName?.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                  {user?.name}
+                  {user?.firstName} {" "}{user?.lastName}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-300 truncate">
-                  {user?.designation}
+                  {user?.position?.title}
                 </p>
               </div>
               <Button
@@ -174,14 +204,14 @@ export function Sidebar({
                 <ChevronDown
                   className={cn(
                     "h-4 w-4 transition-transform",
-                    userMenuOpen && "rotate-180"
+                    !userMenuOpen && "rotate-180"
                   )}
                 />
               </Button>
             </div>
 
             {userMenuOpen && (
-              <div className="space-y-1">
+              <div className="space-y-1 absolute bottom-16 left-0 right-0 w-full bg-white dark:bg-gray-900 border-[1px] border-black dark:border-white mb-2">
                 <Link
                   href="/dashboard/profile"
                   className="flex items-center space-x-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 rounded-lg"
@@ -255,11 +285,11 @@ export function Sidebar({
       <nav className="flex-1 p-4">
         <ul
           className={` gap-1 flex flex-col ${
-            user?.role === "HOD" ? " flex-col-reverse" : "lg:flex-col"
+            user?.roles?.includes("Manager") ? " flex-col-reverse" : "lg:flex-col"
           }`}
         >
           {navigationItems.map((item) => {
-            if (user && item.roles.includes(user.role)) {
+            if (user && item?.roles?.some((role) => user?.roles?.includes(role))) {
               return (
                 <li key={item.href}>
                   <Link
@@ -280,28 +310,28 @@ export function Sidebar({
               );
             }
           })}
-          {departments.map((item: Department) => {
+          {[...departments].map((item: Department) => {
             if (
-              user?.role !== "CEO" &&
-              (user?.role !== "HOD" || user.departmentSlug !== item.slug)
+              !user?.roles?.includes("SystemAdmin") &&
+              (!user?.roles?.includes("Manager") || "hr1" !== item.slug)
             ) {
               return null;
             }
             return (
               <Link
-                href={`/dashboard/departments/${item.slug}`}
+                href={`/dashboard/departments/${item.slug || "hr"}`}
                 key={item.id}
                 className={cn(
                   "flex items-center px-3 py-[6px] rounded-lg text-sm font-medium transition-colors line-clamp-1 overflow-hidden",
                   collapsed ? "justify-center" : "space-x-3",
-                  pathname.endsWith(item.slug)
+                  pathname.endsWith(item.slug || "hr")
                     ? "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300"
                     : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
                 )}
-                title={collapsed ? item.title : undefined}
+                title={collapsed ? item.name : undefined}
               >
                 <Building2 className="h-5 w-5 inline-block" />
-                {!collapsed && <span>{item.title}</span>}
+                {!collapsed && <span>{item.name}</span>}
               </Link>
             );
           })}
@@ -316,22 +346,22 @@ export function Sidebar({
       >
         {collapsed ? (
           <Avatar className="h-8 w-8 mx-auto">
-            <AvatarImage src={user?.avatar} alt={user?.name} />
-            <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+            <AvatarImage src={user?.userName} alt={user?.firstName} />
+            <AvatarFallback>{user?.firstName?.charAt(0)}</AvatarFallback>
           </Avatar>
         ) : (
           <>
             <div className="flex items-center space-x-3 mb-3">
               <Avatar className="h-10 w-10">
-                <AvatarImage src={user?.avatar} alt={user?.name} />
-                <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+                 <AvatarImage src={user?.userName} alt={user?.firstName} />
+            <AvatarFallback>{user?.firstName?.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                  {user?.name}
+                  {user?.firstName}{" "}{user?.lastName}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-300 truncate">
-                  {user?.designation}
+                  {user?.position?.title}
                 </p>
               </div>
               <Button
